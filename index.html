@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pentru Lămâia 🍋</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    background:linear-gradient(-45deg,#fff7cc,#ffe066,#ffd86b,#fff2b0);
+    background-size:400% 400%;
+    animation:gradientMove 8s ease infinite;
+    overflow:hidden;
+    text-align:center;
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+h1{
+    font-size:30px;
+    margin-bottom:30px;
+    animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+.buttons{
+    display:flex;
+    gap:20px;
+}
+
+button{
+    font-size:18px;
+    padding:12px 25px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    transition:transform 0.2s ease;
+}
+
+#yesBtn{background:#34c759;color:white;}
+#noBtn{background:#ff3b30;color:white;position:relative;}
+
+#result{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+}
+
+#result img{
+    width:85%;
+    max-width:400px;
+    margin-top:20px;
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.3);
+    animation:fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(0.8);}
+    to{opacity:1;transform:scale(1);}
+}
+
+.confetti{
+    position:fixed;
+    width:8px;
+    height:8px;
+    top:-10px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="main">
+    <h1>hei lămâia 🍋<br>îmi pare rău... mă ierți?</h1>
+    <div class="buttons">
+        <button id="yesBtn">Da 💚</button>
+        <button id="noBtn">Nu 😈</button>
+    </div>
+</div>
+
+<div id="result">
+    <h1>yay lămâia 🍋🎉<br>thank u sister 💛</h1>
+    <img src="poza.jpg" alt="poza">
+</div>
+
+<audio id="sound" preload="auto">
+    <source src="https://www.myinstants.com/media/sounds/tuturu_1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const main=document.getElementById("main");
+const result=document.getElementById("result");
+const sound=document.getElementById("sound");
+
+/* buton NU fuge */
+function moveButton(){
+    const x=Math.random()*120-60;
+    const y=Math.random()*120-60;
+    noBtn.style.transform=`translate(${x}px,${y}px)`;
+}
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("touchstart",moveButton);
+
+/* confetti */
+function createConfetti(){
+    for(let i=0;i<120;i++){
+        const c=document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left=Math.random()*100+"vw";
+        c.style.backgroundColor=
+            `hsl(${Math.random()*360},100%,50%)`;
+        c.style.animationDuration=
+            (Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+}
+
+/* când apasă DA */
+yesBtn.addEventListener("click",()=>{
+    sound.currentTime=0;
+    sound.play().catch(()=>{});
+    createConfetti();
+    main.style.display="none";
+    result.style.display="flex";
+});
+</script>
+
+</body>
+</html>
